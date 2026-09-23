@@ -68,7 +68,6 @@ with:
 ## Quickstart
 
 ```bash
-cp .env.example .env
 docker compose up --build --scale worker=3
 ```
 
