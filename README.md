@@ -10,10 +10,9 @@ This is a *learning-grade but architecturally real* implementation. It is not
 a clone of Airflow's code — it's built from the ground up so you can explain
 every line in an interview.
 
-## Why this project (and not another CRUD app)
+## Why this project 
 
-Most fresher backend projects are "CRUD + auth + Postgres." This project
-forces you to reason about problems senior backend engineers actually deal
+This project forces you to reason about problems senior backend engineers actually deal
 with:
 
 - **Graph algorithms in production code** — topological sort + cycle
@@ -91,42 +90,3 @@ Poll status:
 ```bash
 curl localhost:8000/runs/{run_id}
 ```
-
-## What to build next (good "v2" resume bullets)
-
-- Swap the Redis list for a priority queue so high-priority runs jump ahead
-- Add a `/workflows` YAML DSL instead of raw JSON (mirrors how Dagu/Airflow do it)
-- Add task timeouts with `SIGKILL` on a subprocess executor
-- Add a leader-election mechanism (etcd or Postgres advisory locks) so only
-  one scheduler instance dispatches tasks when you run multiple replicas
-- Add OpenTelemetry tracing across API → scheduler → worker
-- Add a simple web UI showing the DAG and live task states
-
-## Suggested resume bullet points
-
-> Built Orbit, a distributed workflow orchestration engine (Airflow-style)
-> in Python/FastAPI supporting DAG-based task dependencies, exponential
-> backoff retries, and dead-letter queues; used `SELECT FOR UPDATE SKIP
-> LOCKED` for safe concurrent task claiming across N worker replicas.
-
-> Designed a task state machine (7 states) backed by Postgres and a Redis
-> queue, achieving exactly-once task dispatch under concurrent worker polling.
-
-## Honesty note
-
-Don't submit this repo as-is and call it entirely your own without
-understanding it — interviewers who've seen Airflow/Temporal will ask you
-*why* `SKIP LOCKED` matters, *why* backoff needs jitter, and *how* you'd
-scale the scheduler. Read `app/scheduler.py` and `app/worker.py` closely,
-run it locally, break it on purpose (kill a worker mid-task, submit a
-cyclic DAG) and watch what happens. That's what will make the interview
-conversation land.
-
-## Reference implementations worth studying (do not copy verbatim)
-
-- [dagu-org/dagu](https://github.com/dagu-org/dagu) — single-binary,
-  YAML-DAG workflow engine (Go); great for seeing how a "no infra" version
-  of this idea looks.
-- [Apache Airflow](https://github.com/apache/airflow) — the industry
-  standard; read the scheduler and executor source for the real-world
-  version of what `scheduler.py`/`worker.py` here do at toy scale.
