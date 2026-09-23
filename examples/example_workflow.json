@@ -1,0 +1,10 @@
+{
+  "name": "etl-pipeline-demo",
+  "tasks": [
+    { "key": "extract", "command": "echo 'extracting data...' && sleep 1", "depends_on": [] },
+    { "key": "transform_a", "command": "echo 'transforming batch A...' && sleep 1", "depends_on": ["extract"] },
+    { "key": "transform_b", "command": "echo 'transforming batch B...' && sleep 1", "depends_on": ["extract"] },
+    { "key": "load", "command": "echo 'loading into warehouse...' && sleep 1", "depends_on": ["transform_a", "transform_b"] },
+    { "key": "notify", "command": "echo 'pipeline complete, notifying Slack...'", "depends_on": ["load"] }
+  ]
+}
