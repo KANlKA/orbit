@@ -1,4 +1,4 @@
-# Orbit — A Distributed Workflow Orchestration Engine
+# Orbit : A Distributed Workflow Orchestration Engine
 
 Orbit is a small, self-built alternative to Airflow/Temporal/Celery: you define
 workflows as a **DAG of tasks**, submit a run, and a pool of workers picks up
